@@ -27,15 +27,15 @@ public class ShopDrop {
 
         for (int i = index; i < products.length-1 ; i++) {
             Product product = products[i];
-            if (product==null){
-               products[i]=products[i+1];
-            }
-            else {
-              products[i]=null;
+            if (index==i){
+                break;
             }
 
+            products[i-1]=products[i];
 
             }
+
+                products[products.length-1]=null;
 
         return products;
         }
