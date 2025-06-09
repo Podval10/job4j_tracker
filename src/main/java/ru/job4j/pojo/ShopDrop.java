@@ -25,7 +25,7 @@ public class ShopDrop {
     public static Product[] delete(Product[] products, int index) {
         products[index] = null;
 
-        for (int i = index; i < products.length-1 ; i++) {
+        for (int i = products.length; i < index ; i--) {
             Product product = products[i];
             if (index==i){
                 break;
