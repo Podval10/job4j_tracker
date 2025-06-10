@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ShopDropTest {
     @Test
-    public void whenDropFirst() {
+    public void whenDropFirst1() {
         Product[] products = new Product[2];
         products[0] = new Product("Milk", 10);
         products[1] = new Product("Bread", 4);
