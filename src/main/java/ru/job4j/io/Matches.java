@@ -18,7 +18,7 @@ public class Matches {
             }
             count-=matches;
             turn = !turn;
-            /* Остальная логика игры. */
+
             System.out.println(count + " : Осталось спичек");
         }
         if (!turn) {

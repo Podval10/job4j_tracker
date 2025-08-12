@@ -5,18 +5,21 @@ import java.time.format.DateTimeFormatter;
 public class Item {
     private int id;
     private String name;
-    private  LocalDateTime created = LocalDateTime.now();
 
-public LocalDateTime getCreated(){
-    return this.created;
-}
+  private   LocalDateTime created = LocalDateTime.now();
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+
+    public Item(String name) {
+        this.name = name;
+    }
 
     public Item(){
     }
-    public Item(String papam){
-      name=papam;
-    }
+//     public Item(String papam){
+//        this.name=papam;
+//    }
     public Item(int id,String name){
        this.id=id;
       this.name =name;
@@ -35,6 +38,19 @@ public LocalDateTime getCreated(){
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", created=" + created.format(FORMATTER) +
+                '}';
+    }
+
+    public LocalDateTime getCreated(){
+        return this.created;
     }
     public void www(){
         System.out.println("Сколько мне лет? "+ id );
