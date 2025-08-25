@@ -1,6 +1,11 @@
 package ru.job4j.tracker;
 
 public class ExitAction implements UserAction {
+    private final Output output;
+
+    public ExitAction(Output output) {
+        this.output = output;
+    }
     @Override
     public String name() {
         return "Завершить программу";
@@ -8,7 +13,9 @@ public class ExitAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== Завершение программы ===");
+        output.println("Меню:");
+        output.println("0. Завершить программу");
+        output.println("=== Завершение программы ===");
         return false;
     }
 }

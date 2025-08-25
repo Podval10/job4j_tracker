@@ -41,42 +41,88 @@ void whenCreateItem() {
     Input input = new MockInput(
             new String[] {"0", "Item name", "1"}
     );
+    Item item = new Item("Item name");
+    Output output = new StubOutput();
     Tracker tracker = new Tracker();
+    item = tracker.add(item);
     UserAction[] actions = {
-            new CreateAction(),
-            new ExitAction()
+            new CreateAction(output),
+            new ExitAction(output)
     };
-    new StartUI().init(input, tracker, actions);
-    assertThat(tracker.findAll()[0].getName()).isEqualTo("Item name");
+    new StartUI(output).init(input, tracker, actions);
+    assertThat(output.toString()).isEqualTo("=== Создание новой заявки ===" + System.lineSeparator()
+    + "Добавленная заявка: " + item);
 }
     @Test
     void whenReplaceItem() {
+    Output output = new StubOutput();
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Replaced item")); /* Добавляется в tracker новая заявка */
         String replacedName = "New item name";
         Input input = new MockInput(
-                new String[] {"0",String.valueOf(item.getId()), "1"}
+                new String[] {"0", String.valueOf((item.getId())),replacedName, "1"}
         );
         UserAction[] actions = {
-                new ReplaceAction(),
-                new ExitAction()
+                new ReplaceAction(output),
+                new ExitAction(output)
         };
-        new StartUI().init(input, tracker, actions);
-        assertThat(tracker.findById(item.getId()).getName()).isEqualTo(replacedName);
+        new StartUI(output).init(input, tracker, actions);
+        assertThat(output.toString()).isEqualTo(replacedName);
     }
 
     @Test
     void whenDeleteItem() {
+        Output output = new StubOutput();
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted item")); /* Добавляется в tracker новая заявка */
         Input input = new MockInput(
-                new String[] {"0" /* входные параметры для DeleteAction (должны содержать ID добавленной заявки item.getId()) */, "1"}
+                new String[] {"0",String.valueOf(item.getId()) /* входные параметры для DeleteAction (должны содержать ID добавленной заявки item.getId()) */, "1"}
         );
         UserAction[] actions = {
-                new DeleteAction(),
-                new ExitAction()
+                new DeleteAction(output),
+                new ExitAction(output)
         };
-        new StartUI().init(input, tracker, actions);
-        assertThat(tracker.findById(item.getId())).isNull();
+        new StartUI(output).init(input, tracker, actions);
+        assertThat(output.toString()).isNull();
+    }
+
+    @Test
+    void whenExit() {
+        Output output = new StubOutput();
+        Input input = new MockInput(
+                new String[] {"0"}
+        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+                new ExitAction(output)
+        };
+        StringBuilder result = new StringBuilder();
+        new StartUI(output).init(input, tracker, actions);
+        assertThat(output.toString()).isEqualTo(
+
+
+
+
+
+
+//                result.append("Меню:")
+//                        .append(System.lineSeparator())
+//                        .append("0. Завершить программу")
+//                        .append(System.lineSeparator())
+//                        .append("=== Завершение программы ===")
+//                        .append(System.lineSeparator())
+//        );
+//
+                "Меню:" + System.lineSeparator()
+                        + "0. Завершить программу" + System.lineSeparator()
+                        + "=== Завершение программы ===" + System.lineSeparator());
+
     }
 }
+//
+//"=== Создание новой заявки ===
+//        Добавленная заявка: Item{id=1, name='Item name', created=18-08-2025 23:39:12}
+//        Меню:
+//        0. Завершить программу
+//        === Завершение программы ===
+//        "
