@@ -1,7 +1,12 @@
 package ru.job4j.tracker;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import ru.job4j.tracker.action.*;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.input.MockInput;
+import ru.job4j.tracker.output.Output;
+import ru.job4j.tracker.output.StubOutput;
+
 import static org.assertj.core.api.Assertions.assertThat;
 class StartUITest {
 
@@ -238,6 +243,32 @@ void whenCreateItem() {
                         + "Заявка удалена успешно." + ln
                         + "Меню:" + ln
                         + "0. Удалить заявку" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenInvalidExit() {
+        Output output = new StubOutput();
+        Input input = new MockInput(
+                new String[] {"5","1"}
+        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = new UserAction[]{
+                new ExitAction(output),
+                new ExitAction(output)
+        };
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню:" + ln
+                        + "0. Завершить программу" + ln
+                        + "1. Завершить программу" + ln
+                        + "Неверный ввод, вы можете выбрать: 0 .. " + (actions.length-1) + ln
+
+                        + "Меню:" + ln
+                        + "0. Завершить программу" + ln
                         + "1. Завершить программу" + ln
                         + "=== Завершение программы ===" + ln
         );
