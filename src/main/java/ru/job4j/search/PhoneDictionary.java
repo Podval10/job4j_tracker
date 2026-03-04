@@ -22,11 +22,7 @@ public class PhoneDictionary {
             if (element.getPhone().contains(key)||element.getName().contains(key)||element.getSurname().contains(key)||element.getAddress().contains(key)) {
                 result.add(element);
             }
-//            for (int i = 0; i < persons.size(); i++) {
-//                if (persons.get(i).==key){
-//                    result=persons;
-//
-//                }
+
             }
             return result;
         }
